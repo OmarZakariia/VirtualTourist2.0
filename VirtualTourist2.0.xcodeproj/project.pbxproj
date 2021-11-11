@@ -24,6 +24,9 @@
 		61649C14273D05D3002EFDC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61649C12273D05D3002EFDC6 /* LaunchScreen.storyboard */; };
 		61649C22273D07F7002EFDC6 /* BlackBoxGCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61649C21273D07F7002EFDC6 /* BlackBoxGCD.swift */; };
 		61649C25273D099C002EFDC6 /* VirtualTouristDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61649C23273D099C002EFDC6 /* VirtualTouristDataModel.xcdatamodeld */; };
+		61CEC977273D5EB30072DD07 /* PinOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CEC976273D5EB30072DD07 /* PinOnMap.swift */; };
+		61CEC979273D66960072DD07 /* PhotoAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CEC978273D66960072DD07 /* PhotoAlbumVC.swift */; };
+		61CEC97B273D67540072DD07 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CEC97A273D67540072DD07 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +48,9 @@
 		61649C15273D05D3002EFDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61649C21273D07F7002EFDC6 /* BlackBoxGCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxGCD.swift; sourceTree = "<group>"; };
 		61649C24273D099C002EFDC6 /* VirtualTouristDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTouristDataModel.xcdatamodel; sourceTree = "<group>"; };
+		61CEC976273D5EB30072DD07 /* PinOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinOnMap.swift; sourceTree = "<group>"; };
+		61CEC978273D66960072DD07 /* PhotoAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumVC.swift; sourceTree = "<group>"; };
+		61CEC97A273D67540072DD07 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		6B9D02779602D56A7C7F4DE4 /* Pods-VirtualTourist2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualTourist2.0.debug.xcconfig"; path = "Target Support Files/Pods-VirtualTourist2.0/Pods-VirtualTourist2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		771561B44B1113DC8B60056E /* Pods_VirtualTourist2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VirtualTourist2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6125E2E066754670F053C2 /* Pods-VirtualTourist2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VirtualTourist2.0.release.xcconfig"; path = "Target Support Files/Pods-VirtualTourist2.0/Pods-VirtualTourist2.0.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				6155A0F1273D185100217E2A /* TravelMapViewController.swift */,
+				61CEC978273D66960072DD07 /* PhotoAlbumVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -132,6 +139,7 @@
 		61649C1E273D07CB002EFDC6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				61CEC976273D5EB30072DD07 /* PinOnMap.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -140,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				61398F4E273D282A00DF7DE9 /* Main.storyboard */,
+				61CEC97A273D67540072DD07 /* PhotoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -277,13 +286,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				6155A0EE273D10B300217E2A /* DataControllerClass.swift in Sources */,
+				61CEC977273D5EB30072DD07 /* PinOnMap.swift in Sources */,
 				61649C22273D07F7002EFDC6 /* BlackBoxGCD.swift in Sources */,
 				61649C25273D099C002EFDC6 /* VirtualTouristDataModel.xcdatamodeld in Sources */,
+				61CEC97B273D67540072DD07 /* PhotoCell.swift in Sources */,
 				61398F4B273D258000DF7DE9 /* Pin+CoreDataProperties.swift in Sources */,
 				61649C08273D05D1002EFDC6 /* AppDelegate.swift in Sources */,
 				61398F57273D332E00DF7DE9 /* ClientForFlickr.swift in Sources */,
 				61398F4D273D25F500DF7DE9 /* Pin+CoreDataClass.swift in Sources */,
 				61398F51273D28CE00DF7DE9 /* Photo+CoreDataClass.swift in Sources */,
+				61CEC979273D66960072DD07 /* PhotoAlbumVC.swift in Sources */,
 				61649C0A273D05D1002EFDC6 /* SceneDelegate.swift in Sources */,
 				61398F55273D2A5500DF7DE9 /* ConstantsForFlickr.swift in Sources */,
 				61398F59273D352B00DF7DE9 /* FlickrImage.swift in Sources */,
