@@ -28,16 +28,8 @@ import CoreData
 //
 //}
 
-//public class Pin : NSManagedObject{
-//    convenience init(latitude: Double, longitude: Double, context: NSManagedObjectContext) {
-//        if let entityToInit = NSEntityDescription.entity(forEntityName: "Pin", in: context) {
-//
-//            self.init(entity: entityToInit, insertInto: context)
-//            self.latitude = latitude
-//            self.longitude = longitude
-//        } else {
-//            fatalError("Unable to find the entity name")
-//        }
-//
-//    }
-//}
+public class Pin : NSManagedObject {
+    convenience init(latitude: Double, longitude: Double, context: NSManagedObjectContext){
+//        if let entityToCreate =  NSEntityDescription()
+    }
+}
