@@ -26,21 +26,58 @@ class ClientForFlickr : NSObject{
 
         
         let methodParameters: [String : Any] = [
-            ClientForFlickr.ParameterKeys.Method : ClientForFlickr.ParameterValues.SearchMethod,
-            ClientForFlickr.ParameterKeys.ApiKey : ClientForFlickr.ParameterKeys.ApiKey,
-            ClientForFlickr.ParameterKeys.Format : ClientForFlickr.ParameterValues.ResponseFormat,
-            ClientForFlickr.ParameterKeys.Lat : lat,
-            ClientForFlickr.ParameterKeys.Lon : lon,
-            ClientForFlickr.ParameterKeys.NoJSONCallback : ClientForFlickr.ParameterValues.DisableJSONCallback,
-            ClientForFlickr.ParameterKeys.SafeSearch : ClientForFlickr.ParameterValues.UseSafeSearch,
-            ClientForFlickr.ParameterKeys.Extras : ClientForFlickr.ParameterValues.MediumURL,
-            ClientForFlickr.ParameterKeys.Radius : ClientForFlickr.ParameterValues.SearchRangeKm,
-            ClientForFlickr.ParameterKeys.PerPage : ClientForFlickr.ParameterValues.PerPageAmount,
-            ClientForFlickr.ParameterKeys.Page : Int(arc4random_uniform(6))
+            ClientForFlickr.ParameterKeys.Method: ClientForFlickr.ParameterValues.SearchMethod,
+            ClientForFlickr.ParameterKeys.ApiKey: ClientForFlickr.ParameterValues.ApiKey,
+            ClientForFlickr.ParameterKeys.Format: ClientForFlickr.ParameterValues.ResponseFormat,
+            ClientForFlickr.ParameterKeys.Lat: lat,
+            ClientForFlickr.ParameterKeys.Lon: lon,
+            ClientForFlickr.ParameterKeys.NoJSONCallback:ClientForFlickr.ParameterValues.DisableJSONCallback,
+            ClientForFlickr.ParameterKeys.SafeSearch: ClientForFlickr.ParameterValues.UseSafeSearch,
+            ClientForFlickr.ParameterKeys.Extras: ClientForFlickr.ParameterValues.MediumURL,
+            ClientForFlickr.ParameterKeys.Radius: ClientForFlickr.ParameterValues.SearchRangeKm,
+            ClientForFlickr.ParameterKeys.PerPage: ClientForFlickr.ParameterValues.PerPageAmount,
+            ClientForFlickr.ParameterKeys.Page: Int(arc4random_uniform(6))
+
         ]
+        /*
+         let _ = taskForGetMethod(methodParameters: methodParameters as [String : AnyObject]) { (results, error) in
+             
+             /* 3. Envía las valores extraídos al completion handler. En este caso el valor deseado es 'un array de urls de fotos'. Representado por [FlickrImage] */
+             if let error = error {
+                 
+                 completionHandlerForGetPhotosPath(nil, error)
+             
+             } else {
+                 
+                 if let photos = results?[FlickrClient.JSONResponseKeys.Photos] as? [String:AnyObject],
+                      let photo = photos [FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
+                     
+                     let flickrImages = FlickrImage.photosPathFromResults(photo)
+                     completionHandlerForGetPhotosPath(flickrImages, nil) // llena el objeto 'FlickrImage' con un array de diccionarios 👈
+                     
+                 } else {
+                     
+                     completionHandlerForGetPhotosPath(nil, NSError(domain: "getPhotosPath parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosPath"]))
+                     
+                 }
+                 
+             }
+
+         }
+         */
         
         let _ = taskForGetMethod(methodParameters: methodParameters as [String: AnyObject]) { results, error in
-            
+            if let error = error {
+                completionHandlerForGetPhotosPath(nil, error)
+            } else {
+                if let photos = results?[ClientForFlickr.JSONResponseKeys.Photos] as? [String: AnyObject],
+                   let photo = photos[ClientForFlickr.JSONResponseKeys.Photo] as? [[String:AnyObject]]{
+                    let flickerImage = FlickrImage.photosPathFromResults(photo)
+                    completionHandlerForGetPhotosPath(flickerImage, nil)
+                } else {
+                    completionHandlerForGetPhotosPath(nil, NSError(domain: "getPhotosPath", code: 0, userInfo: [NSLocalizedDescriptionKey:"Could not parse getPhotosPath"]))
+                }
+            }
         }
     }
     

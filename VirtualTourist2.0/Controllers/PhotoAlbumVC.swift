@@ -46,7 +46,7 @@ class PhotoAlbumVC: UIViewController {
         super.viewWillAppear(animated)
         performUpdatesForUIOnTheMainQueue{
            self.collectionView.reloadData()
-            print("\(self.coreDataPhotos.count)")
+            print("📷\(self.coreDataPhotos.count)")
         }
     }
 
@@ -57,7 +57,7 @@ class PhotoAlbumVC: UIViewController {
         
         addAnnotationToMap()
         
-        collectionViewLayout()
+        layoutForCollectionView()
         
         fetchRequestForPhotos()
         
@@ -75,60 +75,103 @@ class PhotoAlbumVC: UIViewController {
         
         if let result = try? dataControllerClass.viewContext.fetch(fetchRequest){
             coreDataPhotos = result
+//            print("result \(result)")
             try? dataControllerClass.viewContext.save()
             
             performUpdatesForUIOnTheMainQueue {
                 if self.coreDataPhotos.count == 0 {
-                    
+                    self.flickerPhotosRequestFromPin()
                 }
+            }
+            self.collectionView.reloadData()
+        }
+        print("fetchRequestForPhotos called" )
+    }
+    
+    func flickerPhotosRequestFromPin() {
+        print("flickerPhotosRequestFromPin called")
+        ClientForFlickr.sharedInstance().getPhotosPath(lat: coordinateSelected.latitude, lon: coordinateSelected.longitude) { photos, error in
+            if let photos = photos {
+                self.flickerPhotos = photos
+                
+                for photo in self.flickerPhotos {
+                    let photoPath = photo.photoPath
+                    let photoCoreData = Photo(imageURL: photoPath, context: self.dataControllerClass.viewContext)
+                    photoCoreData.pin = self.pin
+                    self.coreDataPhotos.append(photoCoreData)
+                    try? self.dataControllerClass.viewContext.save()
+                }
+                performUpdatesForUIOnTheMainQueue {
+                    self.collectionView.reloadData()
+                }
+            } else {
+                print("\(error)from flickerPhotosRequestFromPin" ?? "empty error from flickerPhotosRequestFromPin")
             }
         }
     }
-    /*
-     func fetchRequestForPhotos() {
-         
-         // hay objetos 'Photo' persistidos? 🔍
-         let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
-         
-         // predicate: filtrar ÚNICAMENTE las fotos asociadas al 'pin' actual 👈
-         let predicate = NSPredicate(format: "pin == %@", pin)
-         
-         // pone a la solicitud de búsqueda este predicado específico
-         fetchRequest.predicate = predicate
-         
-         // el resultado de la búsqueda
-         if let result = try? dataController.viewContext.fetch(fetchRequest) {
-             
-                     // si el resultado de la solicitud es exitoso
-                     // lo guarda en el array de fotos
-                     coreDataPhotos = result // coreDataPhotos: [Photo] 🔌
-             
- //                    // intenta guardar el contexto (para que los datos, las fotos asociadas, queden persistidas)
- //                    try? dataController.viewContext.save() // 💿
-             
-                     // y actualiza la interfaz con los datos...
-             
-                     // dispatch
-                     performUIUpdatesOnMain {
-                         
-                         // comprueba el resultado de la solicitud
-                         // si el array 'coreDataPhotos' está vacío..
-                         if self.coreDataPhotos.count == 0 {
-                             
-                             // ..entonces hacer una solicitud web para obtener un set de fotos
-                             // Flickr Client 👈 ///////////////////////////////////////////////////////////////////////////////////////
-                             
-                             /// task: obtener un nuevo set de fotos asociadas a un pin determinado y guardarlas
-                             self.requestFlickrPhotosFromPin()
-
-                         } // end if
-                         
-                         // si hay fotos persistidas actualizar con ellas el 'collection view'
-                         self.collectionView.reloadData() // ACTUALIZA EL MODELO
-             }
-         }
-     }
-     */
-
+    
+    
    
+    
+    func selectedToDeleteFromIndexPath(_ indexPathArray : [IndexPath])-> [Int]{
+        var selected: [Int] = []
+        
+        for indexPath in indexPathArray{
+            selected.append(indexPath.item)
+        }
+        return selected
+    }
+   
+    // MARK: - IBAction Functions
+    @IBAction func deleteSelected(_ sender: Any){
+        if let selected: [IndexPath] = collectionView.indexPathsForSelectedItems {
+            let items = selected.map{$0.item}.sorted().reversed()
+            
+            for item in items {
+                dataControllerClass.viewContext.delete(coreDataPhotos.remove(at: item))
+                try? dataControllerClass.viewContext.save()
+            }
+            collectionView.deleteItems(at: selected)
+        }
+    }
+    
+    @IBAction func newCollectionPhotos(_ sender: UIButton){
+        print("newCollectionPhotos pressed")
+        if selectedToDelete.count > 0 {
+            print("There is more than one selected item to delete")
+        } else {
+            flickerPhotosRequestFromPin()
+        }
+    }
+    
+       
+    // MARK: - MapView Functions
+    
+     
+    func centerMapOnLocation(location : CLLocation){
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        mapFragment.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func addAnnotationToMap(){
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinateSelected
+        mapFragment.addAnnotation(annotation)
+        mapFragment.showAnnotations([annotation], animated: true)
+    }
+   
+}
+
+
+// MARK: - PhotoAlbumVC Extension
+extension PhotoAlbumVC{
+    
+    func layoutForCollectionView(){
+        let width = (view.frame.size.width - 20) / 3
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize =  CGSize(width: width, height: width)
+        
+        collectionView.isHidden = false
+        collectionView.allowsMultipleSelection = true
+    }
 }

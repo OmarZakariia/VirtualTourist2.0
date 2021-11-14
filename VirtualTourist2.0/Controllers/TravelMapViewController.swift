@@ -114,7 +114,7 @@ class TravelMapViewController: UIViewController {
             
             requestFlickrPhotosFromPin(coordinate: coordinateToAdd)
                 
-            
+            print("addPinToMap pressed")
             
         }
         
