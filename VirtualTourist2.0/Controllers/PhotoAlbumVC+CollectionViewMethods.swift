@@ -78,6 +78,7 @@ extension PhotoAlbumVC: UICollectionViewDataSource{
 extension PhotoAlbumVC: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         selectedToDelete = selectedToDeleteFromIndexPath(collectionView.indexPathsForSelectedItems!)
         
         let cell = collectionView.cellForItem(at: indexPath)
