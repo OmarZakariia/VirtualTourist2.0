@@ -39,32 +39,7 @@ class ClientForFlickr : NSObject{
             ClientForFlickr.ParameterKeys.Page: Int(arc4random_uniform(6))
 
         ]
-        /*
-         let _ = taskForGetMethod(methodParameters: methodParameters as [String : AnyObject]) { (results, error) in
-             
-             /* 3. Envía las valores extraídos al completion handler. En este caso el valor deseado es 'un array de urls de fotos'. Representado por [FlickrImage] */
-             if let error = error {
-                 
-                 completionHandlerForGetPhotosPath(nil, error)
-             
-             } else {
-                 
-                 if let photos = results?[FlickrClient.JSONResponseKeys.Photos] as? [String:AnyObject],
-                      let photo = photos [FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
-                     
-                     let flickrImages = FlickrImage.photosPathFromResults(photo)
-                     completionHandlerForGetPhotosPath(flickrImages, nil) // llena el objeto 'FlickrImage' con un array de diccionarios 👈
-                     
-                 } else {
-                     
-                     completionHandlerForGetPhotosPath(nil, NSError(domain: "getPhotosPath parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosPath"]))
-                     
-                 }
-                 
-             }
-
-         }
-         */
+        
         
         let _ = taskForGetMethod(methodParameters: methodParameters as [String: AnyObject]) { results, error in
             if let error = error {

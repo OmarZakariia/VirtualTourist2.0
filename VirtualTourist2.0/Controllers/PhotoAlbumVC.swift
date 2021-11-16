@@ -124,6 +124,8 @@ class PhotoAlbumVC: UIViewController {
    
     // MARK: - IBAction Functions
     @IBAction func deleteSelected(_ sender: Any){
+        
+        print("deleteSelected pressed")
         if let selected: [IndexPath] = collectionView.indexPathsForSelectedItems {
             let items = selected.map{$0.item}.sorted().reversed()
             
@@ -136,6 +138,7 @@ class PhotoAlbumVC: UIViewController {
     }
     
     @IBAction func newCollectionPhotos(_ sender: UIButton){
+        
         print("newCollectionPhotos pressed")
         if selectedToDelete.count > 0 {
             print("There is more than one selected item to delete")
@@ -175,3 +178,7 @@ extension PhotoAlbumVC{
         collectionView.allowsMultipleSelection = true
     }
 }
+
+
+
+
