@@ -9,14 +9,20 @@ import UIKit
 import MapKit
 import CoreData
 
+
 class PhotoAlbumVC: UIViewController {
     
     
     
-    // MARK: - IBOutlets and Properties
+    // MARK: - IBOutlets
     @IBOutlet weak var mapFragment : MKMapView!
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var newCollectionButton : UIButton!
+    
+    
+    
+    
+    // MARK: -  Properties
     var dataControllerClass : DataControllerClass!
     
     let regionRadius : CLLocationDistance = 1000
@@ -32,8 +38,11 @@ class PhotoAlbumVC: UIViewController {
     var coordinateSelected : CLLocationCoordinate2D!
     
     
+    
+    
+    
     var selectedToDelete : [Int] = [] {
-        didSet{
+        didSet {
             if selectedToDelete.count > 0 {
                 newCollectionButton.setTitle("Remove the pictures selected", for: .normal)
             } else {
@@ -44,8 +53,11 @@ class PhotoAlbumVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         performUpdatesForUIOnTheMainQueue{
+            
            self.collectionView.reloadData()
+            
             print("📷\(self.coreDataPhotos.count)")
         }
     }
@@ -66,6 +78,8 @@ class PhotoAlbumVC: UIViewController {
     
     // MARK: - Functions
     
+    
+    
     func fetchRequestForPhotos(){
         let fetchRequest : NSFetchRequest<Photo> =  Photo.fetchRequest()
         
@@ -76,36 +90,48 @@ class PhotoAlbumVC: UIViewController {
         if let result = try? dataControllerClass.viewContext.fetch(fetchRequest){
             coreDataPhotos = result
 //            print("result \(result)")
-            try? dataControllerClass.viewContext.save()
+//            try? dataControllerClass.viewContext.save()
             
             performUpdatesForUIOnTheMainQueue {
                 if self.coreDataPhotos.count == 0 {
                     self.flickerPhotosRequestFromPin()
                 }
+                self.collectionView.reloadData()
             }
-            self.collectionView.reloadData()
+            
         }
-        print("fetchRequestForPhotos called" )
+        
     }
     
     func flickerPhotosRequestFromPin() {
-        print("flickerPhotosRequestFromPin called")
+        
         ClientForFlickr.sharedInstance().getPhotosPath(lat: coordinateSelected.latitude, lon: coordinateSelected.longitude) { photos, error in
             if let photos = photos {
+                
                 self.flickerPhotos = photos
                 
                 for photo in self.flickerPhotos {
+                    
                     let photoPath = photo.photoPath
+                    
                     let photoCoreData = Photo(imageURL: photoPath, context: self.dataControllerClass.viewContext)
+                    
                     photoCoreData.pin = self.pin
+                    
                     self.coreDataPhotos.append(photoCoreData)
+                    
                     try? self.dataControllerClass.viewContext.save()
+                    
                 }
                 performUpdatesForUIOnTheMainQueue {
+                    
                     self.collectionView.reloadData()
+                    
                 }
             } else {
-                print("\(error)from flickerPhotosRequestFromPin" ?? "empty error from flickerPhotosRequestFromPin")
+                
+               // print("\(error)from flickerPhotosRequestFromPin" ?? "empty error from flickerPhotosRequestFromPin")
+                print(error ?? "empty error from flickerPhotosRequestFromPin ")
             }
         }
     }
@@ -116,8 +142,10 @@ class PhotoAlbumVC: UIViewController {
     func selectedToDeleteFromIndexPath(_ indexPathArray : [IndexPath])-> [Int]{
         var selected: [Int] = []
         
-        for indexPath in indexPathArray{
+        for indexPath in indexPathArray {
+            
             selected.append(indexPath.item)
+            
         }
         return selected
     }
@@ -125,7 +153,7 @@ class PhotoAlbumVC: UIViewController {
     // MARK: - IBAction Functions
     @IBAction func deleteSelected(_ sender: Any){
         
-        print("deleteSelected pressed")
+        
         if let selected: [IndexPath] = collectionView.indexPathsForSelectedItems {
             let items = selected.map{$0.item}.sorted().reversed()
             
@@ -139,7 +167,6 @@ class PhotoAlbumVC: UIViewController {
     
     @IBAction func newCollectionPhotos(_ sender: UIButton){
         
-        print("newCollectionPhotos pressed")
         if selectedToDelete.count > 0 {
             print("There is more than one selected item to delete")
         } else {
@@ -149,13 +176,15 @@ class PhotoAlbumVC: UIViewController {
     
        
     // MARK: - MapView Functions
-    
+
      
     func centerMapOnLocation(location : CLLocation){
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapFragment.setRegion(coordinateRegion, animated: true)
     }
     
+    
+    // Add the pin to the map
     func addAnnotationToMap(){
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinateSelected
@@ -169,6 +198,9 @@ class PhotoAlbumVC: UIViewController {
 // MARK: - PhotoAlbumVC Extension
 extension PhotoAlbumVC{
     
+    
+    
+    // Custom layout for the collectionView
     func layoutForCollectionView(){
         let width = (view.frame.size.width - 20) / 3
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
