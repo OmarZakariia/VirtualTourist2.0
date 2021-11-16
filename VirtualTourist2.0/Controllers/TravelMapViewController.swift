@@ -9,10 +9,10 @@ import UIKit
 import CoreData
 import MapKit
 
-class TravelMapViewController: UIViewController {
+class TravelMapViewController: UIViewController, CLLocationManagerDelegate {
     
     
-    // MARK: - IBOutlets and Properties
+    // MARK: - IBOutlets
     
     var dataControllerClass : DataControllerClass!
     
@@ -22,6 +22,9 @@ class TravelMapViewController: UIViewController {
     
     @IBOutlet weak var deletePinsMessage : UIView!
     
+    
+    
+    // MARK: - Properties
     var editMode: Bool = false
     
     var pins : [Pin] = []
@@ -34,9 +37,16 @@ class TravelMapViewController: UIViewController {
     
     var flickerPhotos : [FlickrImage] = [FlickrImage]()
     
+    // CLLocationManager
+    let locationManager  = CLLocationManager()
+    
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cLLocationManagerSetup()
 
         setEditDoneButton()
         
@@ -47,6 +57,38 @@ class TravelMapViewController: UIViewController {
     
     
     // MARK: - Functions
+    
+    fileprivate func cLLocationManagerSetup() {
+        locationManager.delegate = self
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        if #available(iOS 8.0, *){
+            locationManager.requestAlwaysAuthorization()
+        } else {
+             
+//             fallback to earlier versions
+        }
+        locationManager.startUpdatingLocation()
+        
+        let longPress  = UILongPressGestureRecognizer(target: self, action: #selector(self.mapLongPress(_:)))
+        
+        longPress.minimumPressDuration = 1.5
+        mapView.addGestureRecognizer(longPress)
+        
+    }
+    
+   @objc  func mapLongPress(_ recognizer : UIGestureRecognizer){
+        print("A long press has been detected")
+        
+        let touchedAt = recognizer.location(in: self.mapView)
+        
+        let touchedCoordinate : CLLocationCoordinate2D = mapView.convert(touchedAt, toCoordinateFrom: self.mapView)
+        
+        let newPin = MKPointAnnotation()
+        newPin.coordinate = touchedCoordinate
+        mapView.addAnnotation(newPin)
+    }
+    
     func fetchRequestForPin(){
         let fetchRequest : NSFetchRequest<Pin> = Pin.fetchRequest()
         if let result = try? dataControllerClass.viewContext.fetch(fetchRequest) {
@@ -144,4 +186,7 @@ extension TravelMapViewController {
         }
     }
 }
+
+
+
 
