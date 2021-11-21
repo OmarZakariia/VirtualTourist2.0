@@ -88,7 +88,10 @@ class TravelMapViewController: UIViewController, CLLocationManagerDelegate {
         newPin.coordinate = touchedCoordinate
         mapView.addAnnotation(newPin)
        
-       performSegue(withIdentifier: "PinPhotos", sender: self)
+    
+       
+       
+
     }
     
     func fetchRequestForPin(){
@@ -142,7 +145,8 @@ class TravelMapViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - IBActions Functions
     
-    @IBAction func addPinToMap(_ sender: UITapGestureRecognizer){
+    
+    @IBAction func longTapPressed(_ sender: UILongPressGestureRecognizer) {
         if !editMode {
             let gestureTouchLocation : CGPoint = sender.location(in: mapView)
             
@@ -158,11 +162,33 @@ class TravelMapViewController: UIViewController, CLLocationManagerDelegate {
             
             requestFlickrPhotosFromPin(coordinate: coordinateToAdd)
                 
-            print("addPinToMap pressed")
+            print("addPinToMap pressed in long tap pressed")
             
         }
-        
     }
+    
+//    @IBAction func addPinToMap(_ sender: UITapGestureRecognizer){
+//
+//        if !editMode {
+//            let gestureTouchLocation : CGPoint = sender.location(in: mapView)
+//
+//            let coordinateToAdd : CLLocationCoordinate2D = mapView.convert(gestureTouchLocation, toCoordinateFrom: mapView)
+//
+//            let annotation : MKPointAnnotation = MKPointAnnotation()
+//
+//            annotation.coordinate = coordinateToAdd
+//
+//            mapView.addAnnotation(annotation)
+//
+//            addPinToCoreData(coordinate: coordinateToAdd)
+//
+//            requestFlickrPhotosFromPin(coordinate: coordinateToAdd)
+//
+//            print("addPinToMap pressed")
+//
+//        }
+//
+//    }
     
 }
 
