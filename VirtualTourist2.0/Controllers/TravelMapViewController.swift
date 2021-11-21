@@ -87,6 +87,8 @@ class TravelMapViewController: UIViewController, CLLocationManagerDelegate {
         let newPin = MKPointAnnotation()
         newPin.coordinate = touchedCoordinate
         mapView.addAnnotation(newPin)
+       
+       performSegue(withIdentifier: "PinPhotos", sender: self)
     }
     
     func fetchRequestForPin(){

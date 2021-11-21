@@ -70,11 +70,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="MnV-ql-3Q8"/>
-                <tapGestureRecognizer id="AvV-uu-P1n">
-                    <connections>
-                        <action selector="addPinToMap:" destination="BYZ-38-t0r" id="ZkK-rf-XNJ"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="AvV-uu-P1n"/>
             </objects>
             <point key="canvasLocation" x="457.97101449275368" y="133.69565217391306"/>
         </scene>
