@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import MapKit
 
-class TravelMapViewController: UIViewController {
+class TravelMapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     // MARK: - IBOutlets and Properties
@@ -34,6 +34,10 @@ class TravelMapViewController: UIViewController {
     
     var flickerPhotos : [FlickrImage] = [FlickrImage]()
     
+    
+    // gesture recognizer
+    var longTapGesture: UILongPressGestureRecognizer!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +45,64 @@ class TravelMapViewController: UIViewController {
         setEditDoneButton()
         
         fetchRequestForPin()
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupLongTapGesture()
     }
     
     
-    
-    
     // MARK: - Functions
+    
+    func setupLongTapGesture() {
+        print("setupLongTapGesture -- long tap gesture has been detected")
+        longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapGestureHandler(_:)))
+        longTapGesture.minimumPressDuration = 0.2
+        longTapGesture.delegate = self
+        mapView.addGestureRecognizer(longTapGesture)
+    }
+    
+    // LongTapGestureRecognizer
+    
+    @objc func longTapGestureHandler(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        // get the location touched on the map
+        let touchedAt = gestureRecognizer.location(in: self.mapView)
+        
+        // get the coordinates touched on the map
+        let coordinateTouched : CLLocationCoordinate2D = mapView.convert(touchedAt, toCoordinateFrom: self.mapView)
+        
+        // create a new pin
+        let newPin = MKPointAnnotation()
+        
+        // add coordinatestouched to the newPin
+        newPin.coordinate = coordinateTouched
+        
+        // add the newPin to the map
+        mapView.addAnnotation(newPin)
+        
+        // after adding pin to map, send the data to PhotoAlbumVC and present it
+        
+        let photoAlbumVC =  PhotoAlbumVC()
+        
+        photoAlbumVC.coordinateSelected =  coordinateTouched
+        
+        photoAlbumVC.dataControllerClass = dataControllerClass
+        
+        photoAlbumVC.flickerPhotos = flickerPhotos
+        
+      
+        photoAlbumVC.modalPresentationStyle = .fullScreen
+        
+        present(photoAlbumVC, animated: true, completion: nil)
+        
+        
+    }
+    
     func fetchRequestForPin(){
         let fetchRequest : NSFetchRequest<Pin> = Pin.fetchRequest()
         if let result = try? dataControllerClass.viewContext.fetch(fetchRequest) {
@@ -96,52 +152,5 @@ class TravelMapViewController: UIViewController {
         print("\(flickerPhotos)")
     }
     
-    // MARK: - IBActions Functions
-    
-    @IBAction func addPinToMap(_ sender: UITapGestureRecognizer){
-        if !editMode {
-            let gestureTouchLocation : CGPoint = sender.location(in: mapView)
-            
-            let coordinateToAdd : CLLocationCoordinate2D = mapView.convert(gestureTouchLocation, toCoordinateFrom: mapView)
-            
-            let annotation : MKPointAnnotation = MKPointAnnotation()
-            
-            annotation.coordinate = coordinateToAdd
-            
-            mapView.addAnnotation(annotation)
-            
-            addPinToCoreData(coordinate: coordinateToAdd)
-            
-            requestFlickrPhotosFromPin(coordinate: coordinateToAdd)
-                
-            print("addPinToMap pressed")
-            
-        }
-        
-    }
-    
 }
-
-
-// MARK: - Extension
-
-extension TravelMapViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PinPhotos" {
-            let photoAlbumVC = segue.destination as! PhotoAlbumVC
-            
-            let coordinate = sender as! CLLocationCoordinate2D
-            
-            
-            photoAlbumVC.dataControllerClass = dataControllerClass
-            
-            photoAlbumVC.pin = pinToBePassed
-            
-            photoAlbumVC.coordinateSelected = coordinate
-            
-            photoAlbumVC.flickerPhotos = flickerPhotos
-            
-        }
-    }
-}
-
+    

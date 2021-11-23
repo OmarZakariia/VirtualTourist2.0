@@ -23,7 +23,7 @@ extension TravelMapViewController : MKMapViewDelegate{
                     self.pinCoordinate = coordinateSelected
                 }
             }
-            performSegue(withIdentifier: "PinPhotos", sender: coordinateSelected)
+//            performSegue(withIdentifier: "PinPhotos", sender: coordinateSelected)
             mapView.deselectAnnotation(view.annotation, animated: false)
             
         } else {
