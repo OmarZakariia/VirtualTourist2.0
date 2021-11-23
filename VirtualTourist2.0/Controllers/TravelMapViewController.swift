@@ -59,7 +59,7 @@ class TravelMapViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Functions
     
     func setupLongTapGesture() {
-        print("setupLongTapGesture -- long tap gesture has been detected")
+        print("setupLongTap Gesture -- long tap gesture has been detected")
         longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapGestureHandler(_:)))
         longTapGesture.minimumPressDuration = 0.2
         longTapGesture.delegate = self
@@ -85,20 +85,24 @@ class TravelMapViewController: UIViewController, UIGestureRecognizerDelegate {
         // add the newPin to the map
         mapView.addAnnotation(newPin)
         
+    
+        
         // after adding pin to map, send the data to PhotoAlbumVC and present it
         
-        let photoAlbumVC =  PhotoAlbumVC()
-        
+        let photoAlbumVC =  PhotoAlbumViewController()
+
         photoAlbumVC.coordinateSelected =  coordinateTouched
-        
+
         photoAlbumVC.dataControllerClass = dataControllerClass
-        
+
         photoAlbumVC.flickerPhotos = flickerPhotos
         
       
         photoAlbumVC.modalPresentationStyle = .fullScreen
-        
+
         present(photoAlbumVC, animated: true, completion: nil)
+        
+        navigationController?.pushViewController(photoAlbumVC, animated: true)
         
         
     }

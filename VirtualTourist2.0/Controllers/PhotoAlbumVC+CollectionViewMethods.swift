@@ -12,7 +12,7 @@ import MapKit
 
 // MARK: - UICollectionViewDataSource
 
-extension PhotoAlbumVC: UICollectionViewDataSource{
+extension PhotoAlbumViewController: UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -75,7 +75,7 @@ extension PhotoAlbumVC: UICollectionViewDataSource{
 // MARK: - UICollectionViewDelegate
 
 
-extension PhotoAlbumVC: UICollectionViewDelegate {
+extension PhotoAlbumViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedToDelete = selectedToDeleteFromIndexPath(collectionView.indexPathsForSelectedItems!)

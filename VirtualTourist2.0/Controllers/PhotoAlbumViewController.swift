@@ -10,13 +10,22 @@ import MapKit
 import CoreData
 
 
-class PhotoAlbumVC: UIViewController {
+class PhotoAlbumViewController: UIViewController {
     
     
     
     // MARK: - IBOutlets
-    @IBOutlet weak var mapFragment : MKMapView!
-    @IBOutlet weak var collectionView : UICollectionView!
+    @IBOutlet weak var mapFragment : MKMapView! {
+        didSet {
+            self.addAnnotationToMap()
+        }
+    }
+    @IBOutlet weak var collectionView : UICollectionView! {
+        didSet{
+            self.layoutForCollectionView()
+            self.fetchRequestForPhotos()
+        }
+    }
     @IBOutlet weak var newCollectionButton : UIButton!
     
     
@@ -54,24 +63,24 @@ class PhotoAlbumVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        performUpdatesForUIOnTheMainQueue{
-            
-           self.collectionView.reloadData()
-            
-            print("📷\(self.coreDataPhotos.count)")
-        }
+//        performUpdatesForUIOnTheMainQueue{
+//
+//           self.collectionView.reloadData()
+//
+//            print("📷\(self.coreDataPhotos.count)")
+//        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        newCollectionButton.isHidden = false
-        
-        addAnnotationToMap()
-        
-        layoutForCollectionView()
-        
-        fetchRequestForPhotos()
+//        newCollectionButton.isHidden = false
+//
+//        addAnnotationToMap()
+//
+//        layoutForCollectionView()
+//
+//        fetchRequestForPhotos()
         
     }
     
@@ -196,7 +205,7 @@ class PhotoAlbumVC: UIViewController {
 
 
 // MARK: - PhotoAlbumVC Extension
-extension PhotoAlbumVC{
+extension PhotoAlbumViewController{
     
     
     
