@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3291CBA8274BD5FD007893FF /* DabaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3291CBA7274BD5FD007893FF /* DabaViewController.swift */; };
 		460D11C48671ED13A82DF19B /* Pods_VirtualTourist2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771561B44B1113DC8B60056E /* Pods_VirtualTourist2_0.framework */; };
 		61398F4B273D258000DF7DE9 /* Pin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61398F4A273D258000DF7DE9 /* Pin+CoreDataProperties.swift */; };
 		61398F4D273D25F500DF7DE9 /* Pin+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61398F4C273D25F500DF7DE9 /* Pin+CoreDataClass.swift */; };
@@ -19,7 +20,6 @@
 		6155A0EE273D10B300217E2A /* DataControllerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6155A0ED273D10B300217E2A /* DataControllerClass.swift */; };
 		6155A0F2273D185100217E2A /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6155A0F1273D185100217E2A /* TravelMapViewController.swift */; };
 		61649C08273D05D1002EFDC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61649C07273D05D1002EFDC6 /* AppDelegate.swift */; };
-		61649C0A273D05D1002EFDC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61649C09273D05D1002EFDC6 /* SceneDelegate.swift */; };
 		61649C11273D05D3002EFDC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61649C10273D05D3002EFDC6 /* Assets.xcassets */; };
 		61649C14273D05D3002EFDC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61649C12273D05D3002EFDC6 /* LaunchScreen.storyboard */; };
 		61649C22273D07F7002EFDC6 /* BlackBoxGCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61649C21273D07F7002EFDC6 /* BlackBoxGCD.swift */; };
@@ -32,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3291CBA7274BD5FD007893FF /* DabaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DabaViewController.swift; sourceTree = "<group>"; };
 		61398F4A273D258000DF7DE9 /* Pin+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pin+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61398F4C273D25F500DF7DE9 /* Pin+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pin+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61398F4E273D282A00DF7DE9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +45,6 @@
 		6155A0F1273D185100217E2A /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
 		61649C04273D05D1002EFDC6 /* VirtualTourist2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61649C07273D05D1002EFDC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		61649C09273D05D1002EFDC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		61649C10273D05D3002EFDC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61649C13273D05D3002EFDC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		61649C15273D05D3002EFDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,7 +99,6 @@
 				61649C1C273D07B3002EFDC6 /* Model */,
 				61649C1B273D07AC002EFDC6 /* Controllers */,
 				61649C07273D05D1002EFDC6 /* AppDelegate.swift */,
-				61649C09273D05D1002EFDC6 /* SceneDelegate.swift */,
 				61649C10273D05D3002EFDC6 /* Assets.xcassets */,
 				61649C12273D05D3002EFDC6 /* LaunchScreen.storyboard */,
 				61649C15273D05D3002EFDC6 /* Info.plist */,
@@ -115,6 +114,7 @@
 				61CEC978273D66960072DD07 /* PhotoAlbumVC.swift */,
 				61D49B8B273FAE3E00F9F8F0 /* TravelMapViewController+MapViewMethods.swift */,
 				61D49B8D273FB1D500F9F8F0 /* PhotoAlbumVC+CollectionViewMethods.swift */,
+				3291CBA7274BD5FD007893FF /* DabaViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -294,6 +294,7 @@
 				6155A0EE273D10B300217E2A /* DataControllerClass.swift in Sources */,
 				61CEC977273D5EB30072DD07 /* PinOnMap.swift in Sources */,
 				61649C22273D07F7002EFDC6 /* BlackBoxGCD.swift in Sources */,
+				3291CBA8274BD5FD007893FF /* DabaViewController.swift in Sources */,
 				61649C25273D099C002EFDC6 /* VirtualTouristDataModel.xcdatamodeld in Sources */,
 				61CEC97B273D67540072DD07 /* PhotoCell.swift in Sources */,
 				61398F4B273D258000DF7DE9 /* Pin+CoreDataProperties.swift in Sources */,
@@ -303,7 +304,6 @@
 				61D49B8E273FB1D500F9F8F0 /* PhotoAlbumVC+CollectionViewMethods.swift in Sources */,
 				61398F51273D28CE00DF7DE9 /* Photo+CoreDataClass.swift in Sources */,
 				61CEC979273D66960072DD07 /* PhotoAlbumVC.swift in Sources */,
-				61649C0A273D05D1002EFDC6 /* SceneDelegate.swift in Sources */,
 				61D49B8C273FAE3E00F9F8F0 /* TravelMapViewController+MapViewMethods.swift in Sources */,
 				61398F55273D2A5500DF7DE9 /* ConstantsForFlickr.swift in Sources */,
 				61398F59273D352B00DF7DE9 /* FlickrImage.swift in Sources */,

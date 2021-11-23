@@ -15,8 +15,17 @@ class PhotoAlbumVC: UIViewController {
     
     
     // MARK: - IBOutlets
-    @IBOutlet weak var mapFragment : MKMapView!
-    @IBOutlet weak var collectionView : UICollectionView!
+    @IBOutlet weak var mapFragment : MKMapView! {
+        didSet {
+            self.addAnnotationToMap()
+        }
+    }
+    @IBOutlet weak var collectionView : UICollectionView! {
+        didSet {
+            self.layoutForCollectionView()
+            self.fetchRequestForPhotos()
+        }
+    }
     @IBOutlet weak var newCollectionButton : UIButton!
     
     
@@ -54,25 +63,20 @@ class PhotoAlbumVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        performUpdatesForUIOnTheMainQueue{
-            
-           self.collectionView.reloadData()
-            
-            print("📷\(self.coreDataPhotos.count)")
-        }
+//        performUpdatesForUIOnTheMainQueue{
+//
+//            print("📷\(self.coreDataPhotos.count)")
+//        }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        newCollectionButton.isHidden = false
-        
-        addAnnotationToMap()
-        
-        layoutForCollectionView()
-        
-        fetchRequestForPhotos()
-        
+        print("loaded Hamada")
     }
     
     
@@ -84,6 +88,7 @@ class PhotoAlbumVC: UIViewController {
         let fetchRequest : NSFetchRequest<Photo> =  Photo.fetchRequest()
         
         let predicate = NSPredicate(format: "pin == %@", pin)
+  
         
         fetchRequest.predicate = predicate
         
