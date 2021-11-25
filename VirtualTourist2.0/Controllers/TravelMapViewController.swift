@@ -89,6 +89,10 @@ class TravelMapViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // after adding pin to map, send the data to PhotoAlbumVC and present it
         
+//        switch gestureRecognizer.state {
+//        case .began :
+//        }
+        
         let photoAlbumVC =  PhotoAlbumViewController()
 
         photoAlbumVC.coordinateSelected =  coordinateTouched
@@ -100,9 +104,9 @@ class TravelMapViewController: UIViewController, UIGestureRecognizerDelegate {
       
         photoAlbumVC.modalPresentationStyle = .fullScreen
 
-        present(photoAlbumVC, animated: true, completion: nil)
+        self.present(photoAlbumVC, animated: true, completion: nil)
         
-        navigationController?.pushViewController(photoAlbumVC, animated: true)
+//        navigationController?.pushViewController(photoAlbumVC, animated: true)
         
         
     }

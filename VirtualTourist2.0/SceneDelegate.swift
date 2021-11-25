@@ -21,9 +21,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         dataControllerClass.load()
         
+        
+        
         let navigationController = window?.rootViewController as! UINavigationController
         let travelViewController = navigationController.topViewController as! TravelMapViewController
         travelViewController.dataControllerClass = dataControllerClass
+        
+        
+        
+        
+        
     }
     
     
